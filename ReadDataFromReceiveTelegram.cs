@@ -13,6 +13,9 @@ namespace Lagerverwaltung
             //Komplettes Telegramm
             ReceiveData.telegram = telegram;
 
+
+            //test
+
             //Header
             ReceiveData.messageType = telegram.Substring(0, Constants.MESSAGETYPE.Length);
             telegram = telegram.Remove(0, Constants.MESSAGETYPE.Length);
