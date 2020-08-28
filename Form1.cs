@@ -153,16 +153,16 @@ namespace Lagerverwaltung
             bool ok = false;
 
             //Telegramm zusammenbauen
-            string telegram = CreateTelegram();
+            GeneralData.VariablesSrm1.telegram = CreateTelegram();
             //Telegramm Check
-            ok = CheckLength(telegram);
+            ok = CheckLength(GeneralData.VariablesSrm1.telegram);
 
 
             if (ok)
             {
                 //Telegram senden
-                GeneralData.PlcCommunicationChannel1.SendData(telegram);
-                tb_telegramS.Text += telegram;
+                GeneralData.PlcCommunicationChannel1.SendData(GeneralData.VariablesSrm1.telegram);
+                tb_telegramS.Text += GeneralData.VariablesSrm1.telegram;
                 tb_telegramS.Text += Environment.NewLine;
             }
             else
@@ -257,15 +257,21 @@ namespace Lagerverwaltung
             return telegram;
         }
 
+        //Connection Srm
         private void bt_MfrConnect_Click(object sender, EventArgs e)
         {
             GeneralData.PlcCommunicationChannel1.Connect();
+            if (cb_2Channel.Checked)
+            {
+                GeneralData.PlcCommunicationChannel2.Connect();
+            }
+
             //Lifetelegramm Timer aktivieren
-            t_LifeTelegram.Enabled = true;
-            t_LifeTelegram.Start();
+            // t_LifeTelegram.Enabled = true;
+            // t_LifeTelegram.Start();
 
 
-            if (Convert.ToBoolean(GeneralData.PlcCommunicationChannel1.ConnectionEstablished))
+            if (Convert.ToBoolean(GeneralData.PlcCommunicationChannel1.ConnectionEstablishedChannel1))
             {
                 bt_MfrConnect.BackColor = Color.Green;
                 bt_MfrDisconnect.BackColor = Color.Blue;
@@ -276,12 +282,12 @@ namespace Lagerverwaltung
                 bt_MfrDisconnect.BackColor = Color.Blue;
             }
         }
-
         private void bt_MfrDisconnect_Click(object sender, EventArgs e)
         {
             GeneralData.PlcCommunicationChannel1.Disconnect();
+            GeneralData.PlcCommunicationChannel2.Disconnect();
 
-            if (Convert.ToBoolean(GeneralData.PlcCommunicationChannel1.ConnectionClosed))
+            if (Convert.ToBoolean(GeneralData.PlcCommunicationChannel1.ConnectionClosedChannel1))
             {
                 bt_MfrDisconnect.BackColor = Color.Green;
                 bt_MfrConnect.BackColor = Color.Blue;
@@ -293,11 +299,11 @@ namespace Lagerverwaltung
             }
         }
 
+        //Connection DataBase
         private void bt_DataBaseConnect_Click(object sender, EventArgs e)
         {
             PopulateDGV();
         }
-
         private void bt_DataBaseDisconnect_Click(object sender, EventArgs e)
         {
 
@@ -370,7 +376,7 @@ namespace Lagerverwaltung
 
         private void t_LifeTelegram_Tick(object sender, EventArgs e)
         {
-            GeneralData.VariablesSrm1.anyTelegramInPeriod = false;
+            //  GeneralData.VariablesSrm1.anyTelegramInPeriod = false;
 
             string telegram;
 
@@ -398,6 +404,8 @@ namespace Lagerverwaltung
                 GeneralData.PlcCommunicationChannel1.SendData(telegram);
                 tb_telegramS.Text += telegram;
                 tb_telegramS.Text += Environment.NewLine;
+
+                GeneralData.VariablesSrm1.ackExpected = true;
             }
 
         }
@@ -408,8 +416,8 @@ namespace Lagerverwaltung
         {
             if (GeneralData.VariablesSrm1.ackExpected)
             {
-                GeneralData.PlcCommunicationChannel1.SendData(telegram);
-                tb_telegramS.Text += telegram;
+                GeneralData.PlcCommunicationChannel1.SendData(GeneralData.VariablesSrm1.telegram);
+                tb_telegramS.Text += GeneralData.VariablesSrm1.telegram;
                 tb_telegramS.Text += Environment.NewLine;
             }
             else

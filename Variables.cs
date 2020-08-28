@@ -31,6 +31,7 @@ namespace Lagerverwaltung
         public string endsign;
         public string transportnumber;
         public string spare;
+        public string telegram;
 
         public string actualSequencenumberString = "00";
         public int actualSequencenumber = 0;
@@ -38,6 +39,9 @@ namespace Lagerverwaltung
         public bool anyTelegramInPeriod = false;
         public bool ackExpected = false;
         public bool ndr = false;
+        public bool isAckTelegram = false;
+        public bool isEventTelegram = false;
+        public bool headerCheckOk = false;
 
 
 

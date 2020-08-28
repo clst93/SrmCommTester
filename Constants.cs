@@ -48,7 +48,11 @@ namespace Lagerverwaltung
 
         #endregion
 
-        public const string RECEIVERADRESS = "10.0.101.105";
+        public const string RECEIVERADRESS = "192.168.178.237";
 
+        public const string MESSAGETYPE_DM ="DM";
+        public const string MESSAGETYPE_LM ="LM";
+        public const string MESSAGETYPE_AK ="AK";
+        public const string MESSAGETYPE_NK ="NK";
     }
 }

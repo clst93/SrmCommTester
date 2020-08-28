@@ -75,7 +75,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>lagerverwaltungDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="PlcCommunication.cs" />
+    <Compile Include="PlcCommunicationChannel1.cs" />
+    <Compile Include="PlcCommunicationChannel2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadDataFromReceiveTelegram.cs" />
