@@ -33,6 +33,7 @@ namespace Lagerverwaltung
         public static string transportNumber = Constants.TRANSPORTNUMBER;
         public static string spare = Constants.SPARE;
         public static string telegram = Constants.telegram;
+        //blub
         #endregion    
     }
      public class ReceiveAckTelegram//"AK" & "NK"
