@@ -31,7 +31,7 @@ namespace Lagerverwaltung
 
 
             //Messagetyp
-            if ((ReceiveData.messageType != Constants.MESSAGETYPE_AK) && (ReceiveData.messageType != Constants.MESSAGETYPE_NK) &&
+            if ((ReceiveData.messageType != Constants.MESSAGETYPE_AK) && (ReceiveData.messageType != Constants.MESSAGETYPE_NA) &&
                 (ReceiveData.messageType != Constants.MESSAGETYPE_DM) && (ReceiveData.messageType != Constants.MESSAGETYPE_LM))
             {
                 ok = false;

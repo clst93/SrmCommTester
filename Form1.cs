@@ -30,7 +30,7 @@ namespace Lagerverwaltung
             // GeneralData.PlcCommunication.Connect();
 
         }
-        //bla bla
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             //string insertQuery = "";
@@ -341,7 +341,7 @@ namespace Lagerverwaltung
             //telegram += Constants.USERDATA_EMPTY;
 
             //Telegram senden
-            GeneralData.PlcCommunicationChannel1.SendData(telegram);
+            GeneralData.PlcCommunicationChannel2.SendData(telegram);
             tb_telegramS.Text += telegram;
             tb_telegramS.Text += Environment.NewLine;
 

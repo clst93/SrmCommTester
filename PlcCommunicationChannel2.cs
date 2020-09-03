@@ -21,7 +21,7 @@ namespace Lagerverwaltung
         public PlcCommunicationChannel2()
         {
             //Verbindung 2
-            tcpfunctionasyncChannel2 = new TCPFunctionsAsync(null, System.Net.IPAddress.Parse(Constants.RECEIVERADRESS), 2000, true, Constants.HEADER.Length);
+            tcpfunctionasyncChannel2 = new TCPFunctionsAsync(null, System.Net.IPAddress.Parse(Constants.RECEIVERADRESS), 2000, true, Constants.telegram.Length);
             tcpfunctionasyncChannel2.ConnectionEstablished += tcpfunctionasyncChannel2_ConnectionEstablished;
             tcpfunctionasyncChannel2.ConnectionClosed += tcpfunctionasyncChannel2_ConnectionClosed;
             tcpfunctionasyncChannel2.DataRecieved += TcpFunctionAsyncChannel2_DataRecievedEvent;
@@ -48,27 +48,14 @@ namespace Lagerverwaltung
 
             try
             {
-                var telegram = Encoding.ASCII.GetString(data, 0, Constants.HEADER.Length);
+                var telegram = Encoding.ASCII.GetString(data, 0, Constants.telegram.Length);
                 ReadDataFromReceiveTelegram.ReadRecieveData(telegram);
+                CopyTelegram();
 
                 GeneralData.VariablesSrm1.ndr = true;
 
                 //HeaderCheck
                 GeneralData.VariablesSrm1.headerCheckOk = CheckTelegramHeader();
-
-                if (GeneralData.VariablesSrm1.headerCheckOk)
-                {
-                    CopyTelegram();
-
-                    //Telegramm ist eine Quittung
-                    if ((GeneralData.VariablesSrm1.ackExpected) && (GeneralData.VariablesSrm1.isAckTelegram))
-                    {
-                        GeneralData.VariablesSrm1.ackExpected = false;
-                        GeneralData.VariablesSrm1.anyTelegramInPeriod = false;
-                    }
-
-
-                }
 
 
             }
@@ -82,33 +69,42 @@ namespace Lagerverwaltung
         public bool CheckTelegramHeader()
         {
             bool ok = true;
+            string errorCode = "00";
 
-
-
-            //Messagetyp
-            if ((ReceiveData.messageType != Constants.MESSAGETYPE_AK) && (ReceiveData.messageType != Constants.MESSAGETYPE_NK))
-            {
-                ok = false;
-            }
-            //Sequenznummer
-
-            if (Convert.ToInt32(ReceiveData.sequenceNumber) != GeneralData.VariablesSrm1.expectedSequencenumber)
-            {
-                ok = false;
-            }
             //Sender
-            if (ReceiveData.sender != Constants.SENDER)
+            if (ReceiveData.sender != "SRM1")//Constants.RECEIVER)
             {
                 ok = false;
+                errorCode = "01";
             }
             //Empfänger
-            if (ReceiveData.receiver != Constants.RECEIVER)
+            else if (ReceiveData.receiver != Constants.SENDER)
             {
                 ok = false;
+                errorCode = "02";
             }
+            //Messagetyp
+            else if ((ReceiveData.messageType != Constants.MESSAGETYPE_DM) && (ReceiveData.messageType != Constants.MESSAGETYPE_LM))
+            {
+                ok = false;
+                errorCode = "03";
+            }
+            //Sequenznummer
+            else if (Convert.ToInt32(ReceiveData.sequenceNumber) != GeneralData.VariablesSrm1.expectedSequencenumber)
+            {
+                ok = false;
+                errorCode = "05";
+            }
+            //Telegrammwiederholung -> Muss noch implementiert werden.
+            //else if (Convert.ToInt32(ReceiveData.sequenceNumber) != GeneralData.VariablesSrm1.expectedSequencenumber)
+            //{
+            //    ok = false;
+            //    errorCode = "06";
+            //}
 
-            //Test
-            ok = true;
+            //Quittung senden
+            SendQuit(ok, errorCode);
+
             return ok;
         }
 
@@ -116,6 +112,35 @@ namespace Lagerverwaltung
         {
             ReadDataFromReceiveTelegram.CopyToTelegramType(ReceiveData.telegram);
         }
+
+        private void SendQuit(bool ok, string errorCode)
+        {
+            string telegram;
+
+            //Typkennung
+            if (ok)
+            { telegram = "AK"; }
+            else
+            { telegram = "NA"; }
+            //Sequenznummer
+            telegram += ReceiveEventTelegram.sequenceNumber; //ReceiveData.sequenceNumber;
+            //Senderkennung
+            telegram += ReceiveEventTelegram.receiver; //ReceiveData.receiver;
+            //Empfängerkennung
+            telegram += ReceiveEventTelegram.sender; //ReceiveData.sender;
+            //Anzahl Einträge
+            telegram += "01";
+            //Fehlercode
+            telegram += errorCode;
+            ////Füllzeichen
+            //telegram += Constants.USERDATA_EMPTY;
+
+            //Telegram senden
+            GeneralData.PlcCommunicationChannel2.SendData(telegram);
+
+            GeneralData.VariablesSrm1.anyTelegramInPeriod = true;
+        }
+
         public void SendData(string sendData)
         {
             tcpfunctionasyncChannel2.SendStringData(sendData);

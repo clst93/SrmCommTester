@@ -12,7 +12,7 @@ namespace Lagerverwaltung
         //16 Zeichen
         public const string MESSAGETYPE = "..";
         public const string SEQUENCENUMBER = "..";
-        public const string SENDER = "MFCx";
+        public const string SENDER = "MFC1";
         public const string RECEIVER = "SRMx";
         public const string MESSAGECOUNTER = "..";
         public const string ERRORCODE = "..";
@@ -53,6 +53,6 @@ namespace Lagerverwaltung
         public const string MESSAGETYPE_DM ="DM";
         public const string MESSAGETYPE_LM ="LM";
         public const string MESSAGETYPE_AK ="AK";
-        public const string MESSAGETYPE_NK ="NK";
+        public const string MESSAGETYPE_NA ="NA";
     }
 }

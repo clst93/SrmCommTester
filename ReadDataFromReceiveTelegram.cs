@@ -73,74 +73,132 @@ namespace Lagerverwaltung
             GeneralData.VariablesSrm1.isAckTelegram = false;
             GeneralData.VariablesSrm1.isEventTelegram = false;
 
-            if ((ReceiveData.messageType == Constants.MESSAGETYPE_AK) || (ReceiveData.messageType == Constants.MESSAGETYPE_NK))
+            if ((ReceiveData.messageType == Constants.MESSAGETYPE_AK) || (ReceiveData.messageType == Constants.MESSAGETYPE_NA))
             {
                 GeneralData.VariablesSrm1.isAckTelegram = true;
 
                 //Header
-                ReceiveAckTelegram.messageType = telegram.Substring(0, Constants.MESSAGETYPE.Length);
+                //ReceiveAckTelegram.messageType = telegram.Substring(0, Constants.MESSAGETYPE.Length);
 
-                ReceiveAckTelegram.sequenceNumber = telegram.Substring(0, Constants.SEQUENCENUMBER.Length);
+                //ReceiveAckTelegram.sequenceNumber = telegram.Substring(0, Constants.SEQUENCENUMBER.Length);
 
-                ReceiveAckTelegram.sender = telegram.Substring(0, Constants.SENDER.Length);
+                //ReceiveAckTelegram.sender = telegram.Substring(0, Constants.SENDER.Length);
 
-                ReceiveAckTelegram.receiver = telegram.Substring(0, Constants.RECEIVER.Length);
+                //ReceiveAckTelegram.receiver = telegram.Substring(0, Constants.RECEIVER.Length);
 
-                ReceiveAckTelegram.messageCounter = telegram.Substring(0, Constants.MESSAGECOUNTER.Length);
+                //ReceiveAckTelegram.messageCounter = telegram.Substring(0, Constants.MESSAGECOUNTER.Length);
 
-                ReceiveAckTelegram.errorCode = telegram.Substring(0, Constants.ERRORCODE.Length);
+                //ReceiveAckTelegram.errorCode = telegram.Substring(0, Constants.ERRORCODE.Length);
+
+                ReceiveAckTelegram.messageType = ReceiveData.messageType;
+
+                ReceiveAckTelegram.sequenceNumber = ReceiveData.sequenceNumber;
+
+                ReceiveAckTelegram.sender = ReceiveData.sender;
+
+                ReceiveAckTelegram.receiver = ReceiveData.receiver;
+
+                ReceiveAckTelegram.messageCounter = ReceiveData.messageCounter;
+
+                ReceiveAckTelegram.errorCode = ReceiveData.errorCode;
             }
             else if ((ReceiveData.messageType == Constants.MESSAGETYPE_DM) || (ReceiveData.messageType == Constants.MESSAGETYPE_LM))
             {
                 GeneralData.VariablesSrm1.isEventTelegram = true;
 
                 //Header
-                ReceiveEventTelegram.messageType = telegram.Substring(0, Constants.MESSAGETYPE.Length);
+                //ReceiveEventTelegram.messageType = telegram.Substring(0, Constants.MESSAGETYPE.Length);
 
-                ReceiveEventTelegram.sequenceNumber = telegram.Substring(0, Constants.SEQUENCENUMBER.Length);
+                //ReceiveEventTelegram.sequenceNumber = telegram.Substring(0, Constants.SEQUENCENUMBER.Length);
 
-                ReceiveEventTelegram.sender = telegram.Substring(0, Constants.SENDER.Length);
+                //ReceiveEventTelegram.sender = telegram.Substring(0, Constants.SENDER.Length);
 
-                ReceiveEventTelegram.receiver = telegram.Substring(0, Constants.RECEIVER.Length);
+                //ReceiveEventTelegram.receiver = telegram.Substring(0, Constants.RECEIVER.Length);
 
-                ReceiveEventTelegram.messageCounter = telegram.Substring(0, Constants.MESSAGECOUNTER.Length);
+                //ReceiveEventTelegram.messageCounter = telegram.Substring(0, Constants.MESSAGECOUNTER.Length);
 
-                ReceiveEventTelegram.errorCode = telegram.Substring(0, Constants.ERRORCODE.Length);
+                //ReceiveEventTelegram.errorCode = telegram.Substring(0, Constants.ERRORCODE.Length);
+
+                ReceiveEventTelegram.messageType = ReceiveData.messageType;
+
+                ReceiveEventTelegram.sequenceNumber = ReceiveData.sequenceNumber;
+
+                ReceiveEventTelegram.sender = ReceiveData.sender;
+
+                ReceiveEventTelegram.receiver = ReceiveData.receiver;
+
+                ReceiveEventTelegram.messageCounter = ReceiveData.messageCounter;
+
+                ReceiveEventTelegram.errorCode = ReceiveData.errorCode;
 
                 //UserData
-                ReceiveEventTelegram.messageCode = telegram.Substring(0, Constants.MESSAGECODE.Length);
+                //ReceiveEventTelegram.messageCode = telegram.Substring(0, Constants.MESSAGECODE.Length);
 
-                ReceiveEventTelegram.length = telegram.Substring(0, Constants.LENGTH.Length);
+                //ReceiveEventTelegram.length = telegram.Substring(0, Constants.LENGTH.Length);
 
-                ReceiveEventTelegram.ressource = telegram.Substring(0, Constants.RESSOURCE.Length);
+                //ReceiveEventTelegram.ressource = telegram.Substring(0, Constants.RESSOURCE.Length);
 
-                ReceiveEventTelegram.id = telegram.Substring(0, Constants.ID.Length);
+                //ReceiveEventTelegram.id = telegram.Substring(0, Constants.ID.Length);
 
-                ReceiveEventTelegram.source = telegram.Substring(0, Constants.SOURCE.Length);
+                //ReceiveEventTelegram.source = telegram.Substring(0, Constants.SOURCE.Length);
 
-                ReceiveEventTelegram.destination = telegram.Substring(0, Constants.DESTINATION.Length);
+                //ReceiveEventTelegram.destination = telegram.Substring(0, Constants.DESTINATION.Length);
 
-                ReceiveEventTelegram.type = telegram.Substring(0, Constants.TYPE.Length);
+                //ReceiveEventTelegram.type = telegram.Substring(0, Constants.TYPE.Length);
 
-                ReceiveEventTelegram.technicalValues = telegram.Substring(0, Constants.TECHNICALVALUES.Length);
+                //ReceiveEventTelegram.technicalValues = telegram.Substring(0, Constants.TECHNICALVALUES.Length);
 
-                ReceiveEventTelegram.wrappingProgram = telegram.Substring(0, Constants.WRAPPINGPROGRAM.Length);
+                //ReceiveEventTelegram.wrappingProgram = telegram.Substring(0, Constants.WRAPPINGPROGRAM.Length);
 
-                ReceiveEventTelegram.labelingProgram = telegram.Substring(0, Constants.LABELINGPROGRAM.Length);
+                //ReceiveEventTelegram.labelingProgram = telegram.Substring(0, Constants.LABELINGPROGRAM.Length);
 
-                ReceiveEventTelegram.command = telegram.Substring(0, Constants.COMMAND.Length);
+                //ReceiveEventTelegram.command = telegram.Substring(0, Constants.COMMAND.Length);
 
-                ReceiveEventTelegram.weight = telegram.Substring(0, Constants.WEIGHT.Length);
+                //ReceiveEventTelegram.weight = telegram.Substring(0, Constants.WEIGHT.Length);
 
-                ReceiveEventTelegram.status = telegram.Substring(0, Constants.STATUS.Length);
+                //ReceiveEventTelegram.status = telegram.Substring(0, Constants.STATUS.Length);
 
-                ReceiveEventTelegram.config = telegram.Substring(0, Constants.CONFIG.Length);
+                //ReceiveEventTelegram.config = telegram.Substring(0, Constants.CONFIG.Length);
 
-                ReceiveEventTelegram.endSign = telegram.Substring(0, Constants.ENDSIGN.Length);
+                //ReceiveEventTelegram.endSign = telegram.Substring(0, Constants.ENDSIGN.Length);
 
-                ReceiveEventTelegram.transportNumber = telegram.Substring(0, Constants.TRANSPORTNUMBER.Length);
+                //ReceiveEventTelegram.transportNumber = telegram.Substring(0, Constants.TRANSPORTNUMBER.Length);
 
-                ReceiveEventTelegram.spare = telegram.Substring(0, Constants.SPARE.Length);
+                //ReceiveEventTelegram.spare = telegram.Substring(0, Constants.SPARE.Length);
+
+                ReceiveEventTelegram.messageCode = ReceiveData.messageCode;
+
+                ReceiveEventTelegram.length = ReceiveData.length;
+
+                ReceiveEventTelegram.ressource = ReceiveData.ressource;
+
+                ReceiveEventTelegram.id = ReceiveData.id;
+
+                ReceiveEventTelegram.source = ReceiveData.source;
+
+                ReceiveEventTelegram.destination = ReceiveData.destination;
+
+                ReceiveEventTelegram.type = ReceiveData.type;
+
+                ReceiveEventTelegram.technicalValues = ReceiveData.technicalValues;
+
+                ReceiveEventTelegram.wrappingProgram = ReceiveData.wrappingProgram;
+
+                ReceiveEventTelegram.labelingProgram = ReceiveData.labelingProgram;
+
+                ReceiveEventTelegram.command = ReceiveData.command;
+
+                ReceiveEventTelegram.weight = ReceiveData.weight;
+
+                ReceiveEventTelegram.status = ReceiveData.status;
+
+                ReceiveEventTelegram.config = ReceiveData.config;
+
+                ReceiveEventTelegram.endSign = ReceiveData.endSign;
+
+                ReceiveEventTelegram.transportNumber = ReceiveData.transportNumber;
+
+                ReceiveEventTelegram.spare = ReceiveData.spare;
             }
         }
     }
